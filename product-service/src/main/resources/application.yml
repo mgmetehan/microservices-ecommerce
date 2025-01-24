@@ -1,11 +1,22 @@
 spring:
-   application:
-      name: product-service
-   config:
-      import: optional:configserver:http://localhost:8888
+  application:
+    name: product-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/product_db
+    username: postgres
+    password: toor
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: update
+  config:
+    import: optional:configserver:http://localhost:8888
 
 server:
-   port: 0
+  port: 8081
 
 eureka:
   instance:

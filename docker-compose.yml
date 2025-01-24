@@ -1,0 +1,18 @@
+version: '3'
+services:
+  postgres-db:
+    image: 'postgres:13.1-alpine'
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: toor
+    volumes:
+      - ./postgresql:/docker-entrypoint-initdb.d/:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    command:
+      - "postgres"
+      - "-c"
+      - "wal_level=logical"
