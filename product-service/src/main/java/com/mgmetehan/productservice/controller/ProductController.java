@@ -1,9 +1,9 @@
 package com.mgmetehan.productservice.controller;
 
 import com.mgmetehan.productservice.dto.ApiResponse;
-import com.mgmetehan.productservice.dto.request.CreateProductRequest;
-import com.mgmetehan.productservice.dto.request.UpdateProductRequest;
-import com.mgmetehan.productservice.dto.response.ProductResponse;
+import com.mgmetehan.productservice.dto.request.CreateProductRequestDTO;
+import com.mgmetehan.productservice.dto.request.UpdateProductRequestDTO;
+import com.mgmetehan.productservice.dto.response.ResponseProductDTO;
 import com.mgmetehan.productservice.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +28,9 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<ProductResponse>> createProduct(@Valid @RequestBody CreateProductRequest request) {
+    public ResponseEntity<ApiResponse<ResponseProductDTO>> createProduct(@Valid @RequestBody CreateProductRequestDTO request) {
         try {
-            ProductResponse response = productService.createProduct(request);
+            ResponseProductDTO response = productService.createProduct(request);
             return ResponseEntity.ok(new ApiResponse<>("SUCCESS", "Product created successfully", response));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -39,9 +39,9 @@ public class ProductController {
     }
 
     @PutMapping
-    public ResponseEntity<ApiResponse<ProductResponse>> updateProduct(@Valid @RequestBody UpdateProductRequest request) {
+    public ResponseEntity<ApiResponse<ResponseProductDTO>> updateProduct(@Valid @RequestBody UpdateProductRequestDTO request) {
         try {
-            ProductResponse response = productService.updateProduct(request);
+            ResponseProductDTO response = productService.updateProduct(request);
             return ResponseEntity.ok(new ApiResponse<>("SUCCESS", "Product updated successfully", response));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -61,9 +61,9 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<ProductResponse>> getProductById(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<ResponseProductDTO>> getProductById(@PathVariable Long id) {
         try {
-            ProductResponse response = productService.getProductById(id);
+            ResponseProductDTO response = productService.getProductById(id);
             return ResponseEntity.ok(new ApiResponse<>("SUCCESS", "Product retrieved successfully", response));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -72,9 +72,9 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<ProductResponse>>> getAllProducts() {
+    public ResponseEntity<ApiResponse<List<ResponseProductDTO>>> getAllProducts() {
         try {
-            List<ProductResponse> response = productService.getAllProducts();
+            List<ResponseProductDTO> response = productService.getAllProducts();
             return ResponseEntity.ok(new ApiResponse<>("SUCCESS", "Products retrieved successfully", response));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)

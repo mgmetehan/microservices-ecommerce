@@ -2,7 +2,7 @@ package com.mgmetehan.productservice.dto.response;
 
 import java.math.BigDecimal;
 
-public record ProductResponse(
+public record ResponseProductDTO(
         Long id,
         String name,
         BigDecimal price,

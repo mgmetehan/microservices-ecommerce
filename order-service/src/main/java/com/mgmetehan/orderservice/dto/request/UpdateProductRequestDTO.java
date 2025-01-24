@@ -1,11 +1,11 @@
-package com.mgmetehan.productservice.dto.request;
+package com.mgmetehan.orderservice.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 
-public record UpdateProductRequest(
+public record UpdateProductRequestDTO(
         @NotNull(message = "Id cannot be null")
         Long id,
         Optional<String> name,

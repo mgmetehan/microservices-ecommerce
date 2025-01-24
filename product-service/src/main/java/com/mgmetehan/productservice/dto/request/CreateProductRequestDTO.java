@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Positive;
 
 import java.math.BigDecimal;
 
-public record CreateProductRequest(
+public record CreateProductRequestDTO(
         @NotBlank(message = "Name cannot be blank")
         String name,
         @NotNull(message = "Price cannot be null")

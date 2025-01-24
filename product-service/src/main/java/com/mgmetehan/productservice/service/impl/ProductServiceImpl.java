@@ -1,8 +1,8 @@
 package com.mgmetehan.productservice.service.impl;
 
-import com.mgmetehan.productservice.dto.request.CreateProductRequest;
-import com.mgmetehan.productservice.dto.request.UpdateProductRequest;
-import com.mgmetehan.productservice.dto.response.ProductResponse;
+import com.mgmetehan.productservice.dto.request.CreateProductRequestDTO;
+import com.mgmetehan.productservice.dto.request.UpdateProductRequestDTO;
+import com.mgmetehan.productservice.dto.response.ResponseProductDTO;
 import com.mgmetehan.productservice.model.Product;
 import com.mgmetehan.productservice.repository.ProductRepository;
 import com.mgmetehan.productservice.service.ProductService;
@@ -18,7 +18,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
     @Override
-    public ProductResponse createProduct(CreateProductRequest request) {
+    public ResponseProductDTO createProduct(CreateProductRequestDTO request) {
         Product product = Product.builder()
                 .name(request.name())
                 .price(request.price())
@@ -27,11 +27,11 @@ public class ProductServiceImpl implements ProductService {
                 .build();
 
         Product savedProduct = productRepository.save(product);
-        return convertToProductResponse(savedProduct);
+        return convertToResponseProductDTO(savedProduct);
     }
 
     @Override
-    public ProductResponse updateProduct(UpdateProductRequest request) {
+    public ResponseProductDTO updateProduct(UpdateProductRequestDTO request) {
         Product product = productRepository.findById(request.id())
                 .orElseThrow(() -> new IllegalArgumentException("Product not found with id: " + request.id()));
 
@@ -41,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
         request.description().ifPresent(product::setDescription);
 
         Product updatedProduct = productRepository.save(product);
-        return convertToProductResponse(updatedProduct);
+        return convertToResponseProductDTO(updatedProduct);
     }
 
     @Override
@@ -53,21 +53,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponse getProductById(Long id) {
+    public ResponseProductDTO getProductById(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found with id: " + id));
-        return convertToProductResponse(product);
+        return convertToResponseProductDTO(product);
     }
 
     @Override
-    public List<ProductResponse> getAllProducts() {
+    public List<ResponseProductDTO> getAllProducts() {
         return productRepository.findAll().stream()
-                .map(this::convertToProductResponse)
+                .map(this::convertToResponseProductDTO)
                 .toList();
     }
 
-    private ProductResponse convertToProductResponse(Product product) {
-        return new ProductResponse(
+    private ResponseProductDTO convertToResponseProductDTO(Product product) {
+        return new ResponseProductDTO(
                 product.getId(),
                 product.getName(),
                 product.getPrice(),

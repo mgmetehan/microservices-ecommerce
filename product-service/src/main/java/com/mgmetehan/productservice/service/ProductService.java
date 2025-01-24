@@ -1,15 +1,15 @@
 package com.mgmetehan.productservice.service;
 
-import com.mgmetehan.productservice.dto.request.CreateProductRequest;
-import com.mgmetehan.productservice.dto.request.UpdateProductRequest;
-import com.mgmetehan.productservice.dto.response.ProductResponse;
+import com.mgmetehan.productservice.dto.request.CreateProductRequestDTO;
+import com.mgmetehan.productservice.dto.request.UpdateProductRequestDTO;
+import com.mgmetehan.productservice.dto.response.ResponseProductDTO;
 
 import java.util.List;
 
 public interface ProductService {
-    ProductResponse createProduct(CreateProductRequest request);
-    ProductResponse updateProduct(UpdateProductRequest request);
+    ResponseProductDTO createProduct(CreateProductRequestDTO request);
+    ResponseProductDTO updateProduct(UpdateProductRequestDTO request);
     void deleteProduct(Long id);
-    ProductResponse getProductById(Long id);
-    List<ProductResponse> getAllProducts();
+    ResponseProductDTO getProductById(Long id);
+    List<ResponseProductDTO> getAllProducts();
 } 
