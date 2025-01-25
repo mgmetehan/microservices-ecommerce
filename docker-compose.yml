@@ -1,4 +1,5 @@
-version: '3'
+version: '3.8'
+
 services:
   postgres-db:
     image: 'postgres:13.1-alpine'
@@ -16,3 +17,35 @@ services:
       - "postgres"
       - "-c"
       - "wal_level=logical"
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./data/prometheus/config:/etc/prometheus/
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    networks:
+      - monitoring
+
+volumes:
+  grafana-storage:
+
+networks:
+  monitoring:
+    driver: bridge

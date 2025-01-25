@@ -7,18 +7,21 @@ import com.mgmetehan.productservice.model.Product;
 import com.mgmetehan.productservice.repository.ProductRepository;
 import com.mgmetehan.productservice.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
     @Override
     public ResponseProductDTO createProduct(CreateProductRequestDTO request) {
+        log.info("Creating product: {}", request);
         Product product = Product.builder()
                 .name(request.name())
                 .price(request.price())
